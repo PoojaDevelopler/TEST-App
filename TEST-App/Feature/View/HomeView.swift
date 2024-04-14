@@ -9,6 +9,9 @@ import UIKit
 
 class HomeView: UIViewController {
 
+    @IBOutlet weak var mediaCollectionView: UICollectionView!
+    
+    private let reuseIdentifier = CellId.MediaImageCellID.rawValue
     private var viewModel = HomeViewModel()
 
     override func viewDidLoad() {
@@ -16,13 +19,15 @@ class HomeView: UIViewController {
         self.view.backgroundColor = .red
         configuartion()
     }
-
 }
 
 
 extension HomeView{
     
     func configuartion(){
+        mediaCollectionView.delegate = self
+        mediaCollectionView.dataSource = self
+        configureCollectionView()
         initalViewModel()
         observeEvent()
     }
@@ -31,7 +36,6 @@ extension HomeView{
         viewModel.fetchMediaList()
     }
     
-    //dataBinding
     func observeEvent(){
         
         viewModel.updates = { [weak self] event in
@@ -47,6 +51,10 @@ extension HomeView{
                 case .stopLoading:
                     print("errorMsg")
                     
+                case .feacthed:
+                    self.mediaCollectionView.reloadData()
+                    
+                    
                 case .CustomError(let errorMsg):
                     print(errorMsg)
                     
@@ -57,6 +65,39 @@ extension HomeView{
     
 }
 
+
 extension HomeView{
     
+    func configureCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        let spacing: CGFloat = 10
+        let itemSize = (view.frame.width - 4 * spacing) / 3
+        layout.itemSize = CGSize(width: itemSize, height: itemSize)
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
+        mediaCollectionView.collectionViewLayout = layout
+        mediaCollectionView.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+    }
 }
+
+
+extension HomeView:UICollectionViewDataSource , UICollectionViewDelegate{
+
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.mediaModel.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MediaImageCell
+        
+        guard let imageURLString = viewModel.getImageString(forIndex: indexPath.row) else {
+            return UICollectionViewCell()
+        }
+        cell.mediaImageString = imageURLString
+        return cell
+    }
+   
+}
+
+

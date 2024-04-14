@@ -31,12 +31,28 @@ class HomeViewModel {
             case .success(let mediaModel):
                 self.mediaModel = mediaModel
                 print(mediaModel)
-                
+                self.updates?(.feacthed)
             case .failure(let error):
                 print("Failed data:", error)
                 self.updates?(.CustomError(message: error.localizedDescription))
             }
         }
+    }
+    
+    func getImageString(forIndex index: Int) -> String? {
+        guard index < mediaModel.count else { return nil }
+        
+        let item = mediaModel[index]
+        guard let thumbnail = item.thumbnail,
+              let domain = thumbnail.domain,
+              let basePath = thumbnail.basePath,
+              let lastQuality = thumbnail.qualities?.last,
+              let key = thumbnail.key
+        else {
+            return nil
+        }
+        
+        return "\(domain)/\(basePath)/\(lastQuality)/\(key)"
     }
     
 }

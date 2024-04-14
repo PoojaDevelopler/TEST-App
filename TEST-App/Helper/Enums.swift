@@ -42,5 +42,10 @@ typealias dataHandleEvent = ((_ dataEvent : ViewModelEvent) -> Void)
 enum ViewModelEvent {
     case loading
     case stopLoading
+    case feacthed
     case CustomError(message: String)
+}
+
+enum CellId:String{
+    case MediaImageCellID = "MediaImageCell"
 }

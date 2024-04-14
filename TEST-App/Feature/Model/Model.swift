@@ -37,12 +37,8 @@ struct Thumbnail: Codable {
     let version: Int?
     let domain: String?
     let basePath: String?
-    let key: Key?
+    let key: String?
     let qualities: [Int]?
     let aspectRatio: Double?
-}
-
-enum Key: String, Codable {
-    case imageJpg = "image.jpg"
 }
 

@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeView" customModule="TEST_App" customModuleProvider="target">
             <connections>
+                <outlet property="mediaCollectionView" destination="jgA-g2-McT" id="HyH-yx-YJy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,11 +19,10 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="FTA-s8-OJc">
-                    <rect key="frame" x="0.0" y="394" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="jgA-g2-McT">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OPA-bl-6dH">
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QTc-PT-KoX">
                         <size key="itemSize" width="128" height="128"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -32,6 +32,12 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jgA-g2-McT" secondAttribute="trailing" id="SNi-0R-d8M"/>
+                <constraint firstItem="jgA-g2-McT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Xm9-f7-J9E"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jgA-g2-McT" secondAttribute="bottom" id="w5X-64-Ik1"/>
+                <constraint firstItem="jgA-g2-McT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="y6f-He-MIG"/>
+            </constraints>
             <point key="canvasLocation" x="137" y="20"/>
         </view>
     </objects>
