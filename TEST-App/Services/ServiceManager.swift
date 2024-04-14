@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+
 class ApiServices{
     
     func fetchMediaData(completion:@escaping (Result<[CoveragesMediaModel] , DataError>) -> Void){

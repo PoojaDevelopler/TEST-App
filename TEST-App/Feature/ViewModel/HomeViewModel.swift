@@ -8,20 +8,10 @@
 import Foundation
 
 
-enum ViewModelEvent {
-    case loading
-    case stopLoading
-    case CustomError(message: String)
-}
-
-
-
 class HomeViewModel {
     
     var mediaModel = [CoveragesMediaModel]()
-    var vmUpdate: ViewModelEvent? = .CustomError(message: "")
-    typealias dataHandleEvent = ((_ dataEvent : ViewModelEvent) -> Void)
-
+    var updates: dataHandleEvent?
     
     private var apiService: ApiServices
     
@@ -30,11 +20,11 @@ class HomeViewModel {
     }
     
     func fetchMediaList() {
-        self.vmUpdate = .loading
+        self.updates?(.loading)
         
         apiService.fetchMediaData { [weak self] result in
             guard let self = self else { return }
-            self.vmUpdate = .stopLoading
+            self.updates?(.stopLoading)
             
             switch result {
                 
@@ -44,7 +34,7 @@ class HomeViewModel {
                 
             case .failure(let error):
                 print("Failed data:", error)
-                self.vmUpdate = .CustomError(message: "Something went wrong")
+                self.updates?(.CustomError(message: error.localizedDescription))
             }
         }
     }

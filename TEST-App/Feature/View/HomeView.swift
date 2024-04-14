@@ -9,12 +9,12 @@ import UIKit
 
 class HomeView: UIViewController {
 
-    var viewModel:HomeViewModel = HomeViewModel()
-    
+    private var viewModel = HomeViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .red
-        setupInitial()
+        configuartion()
     }
 
 }
@@ -22,21 +22,41 @@ class HomeView: UIViewController {
 
 extension HomeView{
     
-    func setupInitial(){
+    func configuartion(){
+        initalViewModel()
+        observeEvent()
+    }
+    
+    func initalViewModel(){
         viewModel.fetchMediaList()
     }
     
-    func eventHandler(){
-        viewModel.vmUpdate : { result in
-            switch result {
-            case <#pattern#>:
-                <#code#>
-            default:
-                <#code#>
-            }
+    //dataBinding
+    func observeEvent(){
+        
+        viewModel.updates = { [weak self] event in
+            guard let `self` = self else { return }
             
+            DispatchQueue.main.async{
+                
+                switch event {
+                    
+                case .loading:
+                    print("errorMsg")
+                    
+                case .stopLoading:
+                    print("errorMsg")
+                    
+                case .CustomError(let errorMsg):
+                    print(errorMsg)
+                    
+                }
+            }
         }
     }
     
+}
+
+extension HomeView{
     
 }

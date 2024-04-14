@@ -34,8 +34,13 @@ enum DataError:Error{
             return "Not Able to Make Request body param"
         }
     }
-    
 }
 
 
+typealias dataHandleEvent = ((_ dataEvent : ViewModelEvent) -> Void)
 
+enum ViewModelEvent {
+    case loading
+    case stopLoading
+    case CustomError(message: String)
+}
