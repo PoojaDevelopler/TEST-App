@@ -17,6 +17,7 @@ class MediaImageCell: UICollectionViewCell {
         self.prepareForReuse()
     }
     
+   
     var mediaImageString:String?{
         didSet{
             updatedMediaImage()

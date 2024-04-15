@@ -11,17 +11,6 @@ private let imageCache = NSCache<AnyObject, AnyObject>()
 private let localCache = LocalFileManager.shared
 private let imageLoader = ImageLoader()
 
-fileprivate  func showAlert(message: String) {
-     DispatchQueue.main.async {
-         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "OK", style: .default))
-         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let rootViewController = windowScene.windows.first?.rootViewController {
-             rootViewController.present(alert, animated: true, completion: nil)
-         }
-     }
- }
-
 extension UIImageView {
     func setImage(url: String, placeholder: String? = nil) {
         self.image = UIImage(named: placeholder ?? "placeholder")
@@ -53,7 +42,7 @@ extension UIImageView{
             if let image = await imageLoader.loadImage(from: url) {
                 self.image = image
             } else {
-                showAlert(message: "image not found")
+                self.image = UIImage(named: "noimage")
             }
         }
     }
@@ -77,8 +66,7 @@ actor ImageLoader {
             
         } catch {
             print("Error loading image from \(url.absoluteString): \(error)")
-            showAlert(message: error.localizedDescription)
-            return UIImage(named: "placeholder")
+            return UIImage(named: "noimage")
         }
     }
 }
