@@ -14,12 +14,12 @@ import Foundation
 
 struct CoveragesMediaModel: Codable {
     let id, title: String?
-    let language: Language?
+//    let language: Language?
     let thumbnail: Thumbnail?
-    let mediaType: Int?
+//    let mediaType: Int?
     let coverageURL: String?
-    let publishedAt, publishedBy: String?
-    let backupDetails: BackupDetails?
+//    let publishedAt, publishedBy: String?
+//    let backupDetails: BackupDetails?
 }
 
 struct BackupDetails: Codable {

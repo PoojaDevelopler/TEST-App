@@ -11,8 +11,11 @@ class HomeView: UIViewController {
 
     @IBOutlet weak var mediaCollectionView: UICollectionView!
     
+    private var activityIndicator: UIActivityIndicatorView!
     private let reuseIdentifier = CellId.MediaImageCellID.rawValue
     private var viewModel = HomeViewModel()
+    private let imageLoader = ImageLoader()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +28,25 @@ class HomeView: UIViewController {
 extension HomeView{
     
     func configuartion(){
+        
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
+        activityIndiactorSetup()
         configureCollectionView()
         initalViewModel()
         observeEvent()
+       
+    }
+    
+    func activityIndiactorSetup(){
+        activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
     }
     
     func initalViewModel(){
-        viewModel.fetchMediaList()
+        self.viewModel.fetchMediaList()
     }
     
     func observeEvent(){
@@ -44,17 +57,14 @@ extension HomeView{
             DispatchQueue.main.async{
                 
                 switch event {
-                    
                 case .loading:
-                    print("errorMsg")
+                    self.activityIndicator.startAnimating()
                     
                 case .stopLoading:
-                    print("errorMsg")
+                    self.activityIndicator.stopAnimating()
                     
                 case .feacthed:
                     self.mediaCollectionView.reloadData()
-                    
-                    
                 case .CustomError(let errorMsg):
                     print(errorMsg)
                     
@@ -99,5 +109,4 @@ extension HomeView:UICollectionViewDataSource , UICollectionViewDelegate{
     }
    
 }
-
 

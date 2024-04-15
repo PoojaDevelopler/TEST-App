@@ -9,10 +9,7 @@ import UIKit
 
 class MediaImageCell: UICollectionViewCell {
     
-    
-    
     @IBOutlet weak var mediaImage:UIImageView!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,9 +25,10 @@ class MediaImageCell: UICollectionViewCell {
     
     
     private func updatedMediaImage(){
-        
         if let mediaImageString {
-            self.mediaImage.covertUrlToImage(urlString: mediaImageString)
+            DispatchQueue.main.async {
+                self.mediaImage.setImage(url: mediaImageString)
+            }
         }
     }
     

@@ -27,7 +27,6 @@ class HomeViewModel {
             self.updates?(.stopLoading)
             
             switch result {
-                
             case .success(let mediaModel):
                 self.mediaModel = mediaModel
                 print(mediaModel)
@@ -51,7 +50,6 @@ class HomeViewModel {
         else {
             return nil
         }
-        
         return "\(domain)/\(basePath)/\(lastQuality)/\(key)"
     }
     
