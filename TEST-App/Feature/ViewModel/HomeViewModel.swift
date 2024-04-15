@@ -29,7 +29,6 @@ class HomeViewModel {
             switch result {
             case .success(let mediaModel):
                 self.mediaModel = mediaModel
-                print(mediaModel)
                 self.updates?(.feacthed)
             case .failure(let error):
                 print("Failed data:", error)

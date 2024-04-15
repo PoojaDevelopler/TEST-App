@@ -19,7 +19,6 @@ class HomeView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
         configuartion()
     }
 }
@@ -28,7 +27,7 @@ class HomeView: UIViewController {
 extension HomeView{
     
     func configuartion(){
-        
+        self.title = "आचार्यप्रशान्त"
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
         activityIndiactorSetup()
@@ -80,7 +79,7 @@ extension HomeView{
     
     func configureCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 10
+        let spacing: CGFloat = 8
         let itemSize = (view.frame.width - 4 * spacing) / 3
         layout.itemSize = CGSize(width: itemSize, height: itemSize)
         layout.minimumInteritemSpacing = spacing

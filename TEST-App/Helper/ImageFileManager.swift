@@ -13,7 +13,6 @@ class LocalFileManager{
     private init(){}
     
     func savedImage(image:UIImage , imageName:String , folderName:String){
-        
         //craete folder for saving image if already there if will igbore
         createFolder(folderName: folderName)
         
@@ -55,9 +54,8 @@ class LocalFileManager{
         guard let fileName = URL(string: imageName) else { return nil }
         
         //break the path to get url
-        let first = URL(string: imageName)!.pathComponents[2]+URL(string: imageName)!.pathComponents[3]
-        
-        return folderUrl.appendingPathComponent(first+fileName.lastPathComponent)
+        let pathToStore = fileName.pathComponents[2] + fileName.pathComponents[3] + fileName.lastPathComponent
+        return folderUrl.appendingPathComponent(pathToStore)
     }
  
     

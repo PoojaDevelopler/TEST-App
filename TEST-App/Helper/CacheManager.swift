@@ -12,18 +12,16 @@ private let localCache = LocalFileManager.shared
 private let imageLoader = ImageLoader()
 
 extension UIImageView {
-    func setImage(url: String, placeholder: UIImage? = nil) {
-        self.covertUrlToImage(urlString: url, placeholder: placeholder)
+    func setImage(url: String, placeholder: String? = nil) {
+        self.image = UIImage(named: placeholder ?? "placeholder")
+        self.covertUrlToImage(urlString: url)
     }
 }
 
 extension UIImageView{
     
-    private func covertUrlToImage(urlString: String, placeholder: UIImage?){
+    private func covertUrlToImage(urlString: String){
         guard let url = URL(string: urlString) else { return }
-        
-        self.image = UIImage(named: "placeholder")
-        
         
         //Check if image is available in cache
         if let cachedImage = imageCache.object(forKey: NSString(string: urlString)) as? UIImage {
@@ -35,7 +33,7 @@ extension UIImageView{
         // Image not found in memory cache, check disk cache
         if let cachedImage = localCache.getImage(imageName: urlString, folderName: "MediaImage"){
             self.image = cachedImage
-            imageCache.setObject(cachedImage, forKey: url.absoluteString as NSString)
+            imageCache.setObject(cachedImage, forKey: urlString as NSString)
             return
         }
         
@@ -68,7 +66,7 @@ actor ImageLoader {
             
         } catch {
             print("Error loading image from \(url.absoluteString): \(error)")
-            return nil
+            return UIImage(named: "placeholder")
         }
     }
 }
