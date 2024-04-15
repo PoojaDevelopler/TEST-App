@@ -26,7 +26,7 @@ class HomeView: UIViewController {
 
 extension HomeView{
     
-    func configuartion(){
+    private func configuartion(){
         self.title = "आचार्यप्रशान्त"
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
@@ -34,21 +34,21 @@ extension HomeView{
         configureCollectionView()
         initalViewModel()
         observeEvent()
-       
+        
     }
     
-    func activityIndiactorSetup(){
+    private  func activityIndiactorSetup(){
         activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.center = view.center
         activityIndicator.hidesWhenStopped = true
         view.addSubview(activityIndicator)
     }
     
-    func initalViewModel(){
+    private  func initalViewModel(){
         self.viewModel.fetchMediaList()
     }
     
-    func observeEvent(){
+    private  func observeEvent(){
         
         viewModel.updates = { [weak self] event in
             guard let `self` = self else { return }
@@ -66,18 +66,14 @@ extension HomeView{
                     self.mediaCollectionView.reloadData()
                 case .CustomError(let errorMsg):
                     print(errorMsg)
+                    self.showAlert(message: errorMsg)
                     
                 }
             }
         }
     }
     
-}
-
-
-extension HomeView{
-    
-    func configureCollectionView() {
+    private func configureCollectionView() {
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 8
         let itemSize = (view.frame.width - 4 * spacing) / 3
@@ -87,12 +83,17 @@ extension HomeView{
         mediaCollectionView.collectionViewLayout = layout
         mediaCollectionView.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
     }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 
 extension HomeView:UICollectionViewDataSource , UICollectionViewDelegate{
 
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.mediaModel.count
     }
